@@ -2,81 +2,70 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎬 Auto-Promo Video Generator</title>
+    <title>Auto Promo Video Generator</title>
     <style>
       body {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        margin: 0;
         font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top left, #1e1f45, #111);
         color: #fff;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        min-height: 100vh;
-        margin: 0;
+        align-items: center;
+        height: 100vh;
       }
       .container {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(15px);
-        padding: 2rem 3rem;
-        border-radius: 20px;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-        width: 90%;
-        max-width: 500px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 40px 50px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         text-align: center;
+        backdrop-filter: blur(12px);
+        width: 450px;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+      }
+      .file-input {
+        border: 2px dashed #888;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      input[type="file"] {
+        color: #fff;
       }
       button {
-        background: linear-gradient(90deg, #ff9966, #ff5e62);
+        background: linear-gradient(90deg, #ff6b6b, #f06595);
         border: none;
-        border-radius: 12px;
-        color: #fff;
-        font-size: 1rem;
-        padding: 0.7rem 1.2rem;
+        padding: 12px 30px;
+        border-radius: 8px;
+        color: white;
+        font-size: 16px;
         cursor: pointer;
-        transition: transform 0.2s ease;
+        transition: 0.3s;
       }
       button:hover {
         transform: scale(1.05);
-      }
-      input[type="file"] {
-        margin: 1rem 0;
-        border: 2px dashed #ccc;
-        border-radius: 10px;
-        padding: 1rem;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-      }
-      video {
-        margin-top: 20px;
-        border-radius: 12px;
-        width: 100%;
-        max-height: 300px;
-        outline: none;
-      }
-      .success {
-        margin-top: 15px;
-        color: #00ffb3;
-        font-weight: bold;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>🎥 Auto Promo Video Generator</h1>
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %} {{ form.as_p }}
+      <h1>🎬 Auto Promo Video Generator</h1>
+      <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{% url 'generate_video' %}"
+      >
+        {% csrf_token %}
+        <div class="file-input">
+          <label>Upload a video:</label><br /><br />
+          <input type="file" name="video" accept="video/*" required />
+        </div>
         <button type="submit">Generate Promo Video</button>
       </form>
-
-      {% if success %}
-      <div class="success">✅ Promo video generated successfully!</div>
-      <video controls autoplay loop>
-        <source src="{{ output_video }}" type="video/mp4" />
-        Your browser does not support video playback.
-      </video>
-      {% endif %}
     </div>
   </body>
 </html>

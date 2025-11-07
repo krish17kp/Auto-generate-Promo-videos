@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Promo Video Result</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top left, #111, #000);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      .video-box {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        text-align: center;
+      }
+      video {
+        width: 600px;
+        border-radius: 12px;
+        outline: none;
+        margin-bottom: 20px;
+      }
+      a {
+        background: linear-gradient(90deg, #ff6b6b, #f06595);
+        color: white;
+        padding: 10px 25px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+      a:hover {
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-box">
+      <h1>🎉 Promo Video Generated!</h1>
+      <video controls>
+        <source src="{{ video_url }}" type="video/mp4" />
+        Your browser does not support the video tag.</video
+      ><br />
+      <a href="/">⬅ Back to Home</a>
+    </div>
+  </body>
+</html>
