@@ -1,1 +1,1 @@
-web: gunicorn promo_project.wsgi
+web: gunicorn promo_project.wsgi:application
