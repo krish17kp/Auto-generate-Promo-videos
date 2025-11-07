@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promo Video Generator</title>
+  </head>
+  <body>
+    <h1>Upload a video to generate promo</h1>
+    <form action="/generate/" method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Generate Promo</button>
+    </form>
+
+    {% if output_video %}
+    <h2>Result:</h2>
+    <video width="640" height="360" controls>
+      <source src="{{ output_video }}" type="video/mp4" />
+    </video>
+    {% endif %}
+  </body>
+</html>
