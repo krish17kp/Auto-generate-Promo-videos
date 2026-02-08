@@ -1,108 +1,116 @@
-Auto-Generate Promo Videos
+Automated Promotional Video Generation Pipeline
 
-Automatically generate promotional videos from text and media assets using AI-driven templates and video editing automation.
-
-Table of Contents
+An AI-driven system that converts long-form video content into short, high-impact promotional clips using scene detection, visual classification, and automated video composition.
 
 Overview
 
-Key Features
+This project implements an end-to-end pipeline for automatically generating promotional videos from raw video input. Instead of manual editing, the system analyzes video content, identifies visually and semantically important segments, and assembles them into concise promo-ready clips.
 
-Demo / Screenshots
+The goal is to reduce human editing effort while maintaining content relevance and visual coherence, making it suitable for marketing, social media, and short-form content workflows.
 
-Installation
+Core Capabilities
 
-Usage
+Automated scene detection from raw video input
+
+Intelligent frame and segment selection using deep learning
+
+Visual classification to identify high-engagement segments
+
+Programmatic video trimming, sequencing, and rendering
+
+End-to-end automation from input video to final promo clip
+
+Why This Project Matters
+
+Manual promo video editing is slow, subjective, and does not scale.
+This system demonstrates how computer vision and automation can:
+
+Reduce editing time from hours to minutes
+
+Standardize promo creation across large video libraries
+
+Enable scalable short-form content generation
+
+This is a practical ML + media systems project, not just a script wrapper.
+
+Technical Architecture
+Raw Video
+   ↓
+Scene Detection (PySceneDetect)
+   ↓
+Frame Extraction
+   ↓
+Visual Feature Analysis (CNN)
+   ↓
+Segment Scoring & Selection
+   ↓
+Automated Video Composition (MoviePy / FFmpeg)
+   ↓
+Final Promo Video
 
 Tech Stack
-
+Component	Technology
+Language	Python
+Scene Detection	PySceneDetect
+Deep Learning	TensorFlow / Keras
+Video Processing	MoviePy, FFmpeg
+Feature Extraction	CNN-based models
+Automation	Python Pipelines
 How It Works
 
-Contributing
+Scene Detection
+Detects scene boundaries to split long videos into meaningful segments.
 
-License
+Frame & Feature Extraction
+Extracts frames from each scene and computes visual features using a CNN.
 
-1. Overview
+Segment Ranking
+Scores segments based on visual prominence and content relevance.
 
-Auto-Generate Promo Videos is a tool that transforms text and multimedia assets into ready-to-publish promotional videos. It leverages automation and AI to format visual content, apply transitions, and produce cohesive output without manual editing.
+Clip Assembly
+Selects top-ranked segments and automatically assembles them into a short promotional video.
 
-This project is designed for content creators, social media managers, and marketers who want to scale promo video creation with minimal effort.
+Rendering
+Outputs a finalized promo clip in standard video format.
 
-2. Key Features
-
-Generate promo videos from structured input text
-
-Automatic media sequencing and transition application
-
-Template-based video layout and style
-
-Support for images, video clips, and captions
-
-Export videos in standard MP4 format
-
-
-3. Installation
-Requirements
-
-Node.js (v14+)
+Installation
+Prerequisites
 
 Python 3.8+
 
-FFmpeg installed and accessible in PATH
+FFmpeg installed and added to PATH
 
-Clone Repository
+Setup
 git clone https://github.com/krish17kp/Auto-generate-Promo-videos.git
 cd Auto-generate-Promo-videos
-
-Install Dependencies
-npm install
 pip install -r requirements.txt
 
-4. Usage
-Run the Application
-npm start
-
-Generate a Video
-
-Prepare a project folder with:
-
-Text script (text.txt)
-
-Media assets (images/videos)
-
-Run the generator:
-
-python generate_video.py --input ./project_folder
+Usage
+python main.py --input input_video.mp4 --output promo_video.mp4
 
 
-Output will be saved to:
+The generated promotional video will be saved to the output directory.
 
-./output/video.mp4
+Output
 
-5. Tech Stack
-Layer	Technology
-Frontend	React / HTML / CSS
-Backend	Python
-Media Processing	FFmpeg
-Automation Scripts	Python
-6. How It Works
+Short, trimmed promotional video
 
-Input Parsing: Reads structured text and asset list.
+Optimized for social media and marketing use
 
-Template Selection: Applies predefined layout and timing rules.
+Automatically selected high-importance scenes
 
-Media Composition: Uses FFmpeg to merge assets, add transitions and captions.
+(Sample outputs can be added here)
 
-Export: Generates a final promo video.
+Limitations & Future Improvements
 
-7. Contributing
+Audio sentiment and speech analysis not yet integrated
 
-Fork the repository
+Segment scoring currently visual-only
 
-Create a feature branch
+Future scope includes:
 
-Commit changes with clear messages
+Audio-based emotion detection
 
-Open a pull request
+Text overlay generation
 
-Please follow standard commit and code style guidelines.
+Multi-aspect ratio outputs (Reels, Shorts, TikTok)
