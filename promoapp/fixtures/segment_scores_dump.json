@@ -1,0 +1,172 @@
+[
+{
+  "model": "promoapp.promojob",
+  "pk": "5e22e707-11b4-4806-b78f-24defdfb8440",
+  "fields": {
+    "upload": "89d6fb33-08fe-4a18-8fbc-582429273483",
+    "status": "done",
+    "stage": "render",
+    "progress": 100,
+    "params": {
+      "aspect": "9:16",
+      "config": {
+        "target_duration": 15,
+        "aspect": "9:16",
+        "use_clip": true,
+        "use_motion": true,
+        "use_quality": true,
+        "full_narrative": true,
+        "scene_threshold": 15.0,
+        "title": "My Promo",
+        "cta": "Watch Now"
+      }
+    },
+    "error_message": null,
+    "started_at": "2026-07-08T13:24:35.734Z",
+    "finished_at": "2026-07-08T13:25:11.394Z",
+    "created_at": "2026-07-08T13:24:35.729Z"
+  }
+},
+{
+  "model": "promoapp.scene",
+  "pk": 4,
+  "fields": {
+    "job": "5e22e707-11b4-4806-b78f-24defdfb8440",
+    "index": 0,
+    "start_s": 0.0,
+    "end_s": 4.0,
+    "embedding": null
+  }
+},
+{
+  "model": "promoapp.scene",
+  "pk": 5,
+  "fields": {
+    "job": "5e22e707-11b4-4806-b78f-24defdfb8440",
+    "index": 1,
+    "start_s": 4.0,
+    "end_s": 8.0,
+    "embedding": null
+  }
+},
+{
+  "model": "promoapp.scene",
+  "pk": 6,
+  "fields": {
+    "job": "5e22e707-11b4-4806-b78f-24defdfb8440",
+    "index": 2,
+    "start_s": 8.0,
+    "end_s": 12.04,
+    "embedding": null
+  }
+},
+{
+  "model": "promoapp.scene",
+  "pk": 7,
+  "fields": {
+    "job": "5e22e707-11b4-4806-b78f-24defdfb8440",
+    "index": 3,
+    "start_s": 12.04,
+    "end_s": 16.04,
+    "embedding": null
+  }
+},
+{
+  "model": "promoapp.scene",
+  "pk": 8,
+  "fields": {
+    "job": "5e22e707-11b4-4806-b78f-24defdfb8440",
+    "index": 4,
+    "start_s": 16.04,
+    "end_s": 20.08,
+    "embedding": null
+  }
+},
+{
+  "model": "promoapp.segmentscore",
+  "pk": 4,
+  "fields": {
+    "scene": 4,
+    "visual": -0.04080400988459587,
+    "audio": 0.10140611976385117,
+    "motion": 4.643804550170898,
+    "quality": 1.0,
+    "transcript": null,
+    "fused": 0.4166155755519867,
+    "selected": true,
+    "narrative_role": "outro"
+  }
+},
+{
+  "model": "promoapp.segmentscore",
+  "pk": 5,
+  "fields": {
+    "scene": 5,
+    "visual": -0.039977312088012695,
+    "audio": 0.29050925374031067,
+    "motion": 4.932975769042969,
+    "quality": 1.0,
+    "transcript": null,
+    "fused": 0.8081814050674438,
+    "selected": true,
+    "narrative_role": "hook"
+  }
+},
+{
+  "model": "promoapp.segmentscore",
+  "pk": 6,
+  "fields": {
+    "scene": 6,
+    "visual": -0.050201158970594406,
+    "audio": 0.19819147884845734,
+    "motion": 5.887273788452148,
+    "quality": 1.0,
+    "transcript": null,
+    "fused": 0.37875276803970337,
+    "selected": false,
+    "narrative_role": null
+  }
+},
+{
+  "model": "promoapp.segmentscore",
+  "pk": 7,
+  "fields": {
+    "scene": 7,
+    "visual": -0.043915510177612305,
+    "audio": 0.30751150846481323,
+    "motion": 5.257020950317383,
+    "quality": 1.0,
+    "transcript": null,
+    "fused": 0.7202777862548828,
+    "selected": true,
+    "narrative_role": "climax"
+  }
+},
+{
+  "model": "promoapp.segmentscore",
+  "pk": 8,
+  "fields": {
+    "scene": 8,
+    "visual": -0.04257693514227867,
+    "audio": 0.21654848754405975,
+    "motion": 4.596712589263916,
+    "quality": 1.0,
+    "transcript": null,
+    "fused": 0.5176545977592468,
+    "selected": true,
+    "narrative_role": "build"
+  }
+},
+{
+  "model": "promoapp.promooutput",
+  "pk": "1245af0a-ed5c-47ab-84eb-91a96bf73ab9",
+  "fields": {
+    "job": "5e22e707-11b4-4806-b78f-24defdfb8440",
+    "file": "output/5e22e707-11b4-4806-b78f-24defdfb8440_9x16.mp4",
+    "aspect": "9:16",
+    "duration_s": 14.54,
+    "size_bytes": 286228,
+    "created_at": "2026-07-08T13:25:11.389Z"
+  }
+}
+]

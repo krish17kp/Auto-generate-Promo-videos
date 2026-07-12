@@ -1,0 +1,12 @@
+.git
+.github
+__pycache__
+*.pyc
+.env
+db.sqlite3
+media/
+staticfiles/
+eval_artifacts/
+.pytest_cache/
+docs/
+*.egg-info/

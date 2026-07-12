@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Promo Video Result</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top left, #111, #000);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 40px 20px;
+        box-sizing: border-box;
+      }
+      .wrap {
+        max-width: 700px;
+        width: 100%;
+      }
+      .video-box {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      video {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 12px;
+        outline: none;
+        margin-bottom: 20px;
+      }
+      a.btn {
+        background: linear-gradient(90deg, #ff6b6b, #f06595);
+        color: white;
+        padding: 10px 25px;
+        text-decoration: none;
+        border-radius: 6px;
+        margin: 0 6px;
+        display: inline-block;
+      }
+      a.btn:hover {
+        opacity: 0.9;
+      }
+      .panel {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 20px;
+      }
+      .panel h2 {
+        margin-top: 0;
+        font-size: 16px;
+        color: #f06595;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th,
+      td {
+        padding: 6px 8px;
+        text-align: right;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+      .role {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+      }
+      .role-hook { background: #f06595; }
+      .role-build { background: #4a5aef; }
+      .role-climax { background: #ff9f43; }
+      .role-outro { background: #26de81; }
+      .dim { color: #777; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="video-box">
+        <h1>🎉 Promo Video Generated!</h1>
+        {% for output in outputs %}
+        <p class="dim">{{ output.aspect }} — {{ output.duration_s|floatformat:1 }}s</p>
+        <video controls>
+          <source src="{{ output.file.url }}" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <br />
+        <a class="btn" href="{{ output.file.url }}" download>⬇ Download {{ output.aspect }}</a>
+        <br /><br />
+        {% endfor %}
+        <a class="btn" href="{% url 'home' %}">⬅ Generate another</a>
+      </div>
+
+      {% if scenes %}
+      <div class="panel">
+        <h2>Explainability — why each moment was chosen</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Scene</th>
+              <th>Role</th>
+              <th>Visual</th>
+              <th>Audio</th>
+              <th>Motion</th>
+              <th>Fused</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for scene in scenes %}
+            <tr>
+              <td>#{{ scene.index }} ({{ scene.start_s|floatformat:1 }}s–{{ scene.end_s|floatformat:1 }}s)</td>
+              <td>
+                {% if scene.score.narrative_role %}
+                <span class="role role-{{ scene.score.narrative_role }}">{{ scene.score.narrative_role }}</span>
+                {% else %}
+                <span class="dim">—</span>
+                {% endif %}
+              </td>
+              <td>{% if scene.score.visual != None %}{{ scene.score.visual|floatformat:2 }}{% else %}<span class="dim">—</span>{% endif %}</td>
+              <td>{% if scene.score.audio != None %}{{ scene.score.audio|floatformat:2 }}{% else %}<span class="dim">—</span>{% endif %}</td>
+              <td>{% if scene.score.motion != None %}{{ scene.score.motion|floatformat:2 }}{% else %}<span class="dim">—</span>{% endif %}</td>
+              <td>{{ scene.score.fused|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

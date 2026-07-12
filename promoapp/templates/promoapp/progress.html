@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Generating Promo…</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top left, #1e1f45, #111);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .box {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 40px 50px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        width: 420px;
+      }
+      .bar {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        height: 14px;
+        overflow: hidden;
+        margin: 16px 0;
+      }
+      .fill {
+        background: linear-gradient(90deg, #ff6b6b, #f06595);
+        height: 100%;
+        transition: width 0.4s ease;
+      }
+      .stages {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #999;
+        margin-top: 8px;
+      }
+      .stages span.active {
+        color: #f06595;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>🎬 Generating your promo…</h1>
+      <p id="stage">stage: {{ job.stage|default:"queued" }}</p>
+      <div class="bar"><div class="fill" id="fill" style="width: {{ job.progress }}%;"></div></div>
+      <p id="pct">{{ job.progress }}%</p>
+      <div class="stages">
+        <span data-stage="ingest">ingest</span>
+        <span data-stage="scenes">scenes</span>
+        <span data-stage="features">features</span>
+        <span data-stage="scoring">scoring</span>
+        <span data-stage="narrative">narrative</span>
+        <span data-stage="render">render</span>
+      </div>
+    </div>
+    <script>
+      const jobId = "{{ job.id }}";
+      function highlight(stage) {
+        document.querySelectorAll(".stages span").forEach((el) => {
+          el.classList.toggle("active", el.dataset.stage === stage);
+        });
+      }
+      async function poll() {
+        try {
+          const res = await fetch(`/job/${jobId}/status/`);
+          const data = await res.json();
+          document.getElementById("stage").textContent = "stage: " + (data.stage || "queued");
+          document.getElementById("fill").style.width = data.progress + "%";
+          document.getElementById("pct").textContent = data.progress + "%";
+          highlight(data.stage);
+          if (data.status === "done" || data.status === "failed") {
+            window.location.reload();
+            return;
+          }
+        } catch (e) {
+          /* transient network hiccup — keep polling */
+        }
+        setTimeout(poll, 1500);
+      }
+      highlight("{{ job.stage|default:'' }}");
+      poll();
+    </script>
+  </body>
+</html>

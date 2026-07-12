@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install ruff
+      - run: ruff check promoapp promo_project
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: pip install -r requirements.txt
+      - name: Django test suite (routes, upload safety, jobs, pipeline, eval gate)
+        env:
+          SECRET_KEY: ci-test-secret-key-not-for-production
+        run: python manage.py test promoapp
+
+  eval-smoke:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: pip install -r requirements.txt
+      - name: MVP pipeline smoke — real promo from the fixture video (M1.1 gate)
+        run: |
+          python -m promoapp.pipeline.cli \
+            --input promoapp/fixtures/sample_input.mp4 \
+            --output /tmp/smoke_output.mp4 \
+            --profile mvp --duration 15 --scene-threshold 15
+          test -s /tmp/smoke_output.mp4
+      - name: Hybrid fusion beats every single-signal baseline (M2.2 gate)
+        run: python -m promoapp.eval_ablation
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test, eval-smoke]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    steps:
+      - name: Trigger Render/Railway deploy hook
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "No DEPLOY_HOOK_URL secret configured — skipping deploy (add it in repo Settings > Secrets to enable)."
+            exit 0
+          fi
+          curl -fsSL -X POST "$DEPLOY_HOOK_URL"
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your promos — Auto Promo Video Generator</title>
+    <style>
+      body { margin: 0; font-family: "Poppins", sans-serif; background: radial-gradient(circle at top left, #111, #000); color: #fff; min-height: 100vh; padding: 40px 20px; box-sizing: border-box; }
+      .wrap { max-width: 700px; margin: 0 auto; }
+      table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; }
+      th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      th { color: #f06595; }
+      a { color: #f06595; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .status-done { color: #26de81; }
+      .status-failed { color: #ff6b6b; }
+      .status-processing, .status-queued { color: #feca57; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>🗂 Your promos</h1>
+      <table>
+        <thead>
+          <tr><th>Created</th><th>Status</th><th>Original file</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+          <tr>
+            <td>{{ job.created_at|date:"Y-m-d H:i" }}</td>
+            <td class="status-{{ job.status }}">{{ job.status }}</td>
+            <td>{{ job.upload.original_name }}</td>
+            <td><a href="{% url 'job_result' job.id %}">View</a></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">No promos yet — <a href="{% url 'home' %}">generate one</a>.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

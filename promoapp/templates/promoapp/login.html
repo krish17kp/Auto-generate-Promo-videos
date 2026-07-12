@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Log in — Auto Promo Video Generator</title>
+    <style>
+      body { margin: 0; font-family: "Poppins", sans-serif; background: radial-gradient(circle at top left, #1e1f45, #111); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+      .container { background: rgba(255,255,255,0.08); border-radius: 16px; padding: 40px 50px; text-align: center; width: 360px; }
+      h1 { font-size: 22px; margin-bottom: 20px; }
+      input { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #555; background: #1a1a2e; color: #fff; box-sizing: border-box; }
+      button { background: linear-gradient(90deg, #ff6b6b, #f06595); border: none; padding: 12px 30px; border-radius: 8px; color: white; font-size: 16px; cursor: pointer; }
+      .errorlist { color: #ff6b6b; font-size: 13px; text-align: left; list-style: none; padding: 0; }
+      a { color: #f06595; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔐 Log in</h1>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log in</button>
+      </form>
+      <p><a href="{% url 'signup' %}">Create an account</a></p>
+    </div>
+  </body>
+</html>

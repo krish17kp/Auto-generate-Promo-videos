@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Auto Promo Video Generator</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top left, #1e1f45, #111);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 40px 50px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        backdrop-filter: blur(12px);
+        width: 480px;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+      }
+      .file-input {
+        border: 2px dashed #888;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      input[type="file"] {
+        color: #fff;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+      .row > div {
+        flex: 1;
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        color: #bbb;
+        margin-bottom: 4px;
+      }
+      select,
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #555;
+        background: #1a1a2e;
+        color: #fff;
+        box-sizing: border-box;
+      }
+      button {
+        background: linear-gradient(90deg, #ff6b6b, #f06595);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+      }
+      button:hover {
+        transform: scale(1.05);
+      }
+      .error {
+        background: rgba(255, 60, 60, 0.15);
+        border: 1px solid #ff6b6b;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-bottom: 16px;
+        font-size: 14px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎬 Auto Promo Video Generator</h1>
+      {% if error %}
+      <div class="error">⚠️ {{ error }}</div>
+      {% endif %}
+      <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{% url 'generate_video' %}"
+      >
+        {% csrf_token %}
+        <div class="file-input">
+          <label>Upload a video (MP4/MOV):</label><br /><br />
+          <input type="file" name="video" accept=".mp4,.mov,video/*" required />
+        </div>
+        <div class="row">
+          <div>
+            <label for="aspect">Aspect</label>
+            <select name="aspect" id="aspect">
+              <option value="16:9">16:9 — landscape</option>
+              <option value="9:16">9:16 — vertical</option>
+              <option value="1:1">1:1 — square</option>
+            </select>
+          </div>
+          <div>
+            <label for="duration">Duration</label>
+            <select name="duration" id="duration">
+              <option value="15">15s</option>
+              <option value="30" selected>30s</option>
+              <option value="60">60s</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="profile">Scoring profile</label>
+            <select name="profile" id="profile">
+              <option value="mvp">MVP — fast</option>
+              <option value="capstone">Capstone — hybrid</option>
+              <option value="advanced">Advanced — + captions</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="align-items: center;">
+          <div>
+            <label style="display:inline-flex; align-items:center; gap:6px; font-size:13px; color:#ddd;">
+              <input type="checkbox" name="all_formats" id="all_formats" />
+              Render all 3 aspect ratios (16:9, 9:16, 1:1) in one job
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="title">Title overlay (optional)</label>
+            <input type="text" name="title" id="title" maxlength="100" />
+          </div>
+          <div>
+            <label for="cta">CTA overlay (optional)</label>
+            <input type="text" name="cta" id="cta" maxlength="100" />
+          </div>
+        </div>
+        <button type="submit">Generate Promo Video</button>
+      </form>
+    </div>
+  </body>
+</html>
